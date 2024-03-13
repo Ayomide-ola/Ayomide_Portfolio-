@@ -49,11 +49,12 @@ In conclusion, investors were advised to invest in fixing the two components tha
 ***GitHub Link***: https://github.com/Ayomide-ola/Bussiness_Analysis/blob/main/Haulage_Aps_failure.ipynb
 
 
-***Project 2: Covid-19 survival optimization using Artificial intelegence***
+### Project 2: Covid-19 survival optimization using Artificial intelegence***
 
-***Description:***I believe it is safe to say that Covid-19 was a reset for the world. It was a test that came in form of a pandemic to test our readiness for a medical disaster of such magnitude. The medical practitioners took a significant hit as the entire world turned to them to help us make meaning of a virus that is ravaging lives in record numbers within a short period. Many medical reviews ahs confirmed that the major challenge medical practitioners face is a lack of technical know-how on how to handle individual patient. While some patients survived with symptomatic-based therapy, some other patient needed aggressive life support to survive and unfortunately some patients just didn't have a chance to pull through. 
+***Description:***
+I believe it is safe to say that Covid-19 was a reset for the world. It was a test that came in form of a pandemic to test our readiness for a medical disaster of such magnitude. The medical practitioners took a significant hit as the entire world turned to them to help us make meaning of a virus that is ravaging lives in record numbers within a short period. Many medical reviews ahs confirmed that the major challenge medical practitioners face is a lack of technical know-how on how to handle individual patient. While some patients survived with symptomatic-based therapy, some other patient needed aggressive life support to survive and unfortunately some patients just didn't have a chance to pull through. 
 
-***Project Definition***
+***Prob Definition***
 This project aims to understand through analysis, the impact of comorbidities and other unique features on the survival or death of a sample of COVID-19 patients. I intend to build a robust Machine Learning model that helps to predict a patient’s survival. This project is a machien learning based project, its ultimate goal is to identify a pattern of survival and not survival patients and see the impact their comorbidities has on their outcome. This I believe if incorporated into medicine can save more lives as medical practitioners can decide on best medical approach for each patient.
 
 ***Objectives***
@@ -81,7 +82,7 @@ Fig is a correlation plot of death and survival patients in each age category. O
 ***Why Gaussian Naive Bayes and Random Forest (GNB and RF)?***
 The died column was picked as the target to build a model that predicts if a COVID-19 patient survived covid-19 or not given independent variables. These models where selected because both are used for classification tasks. RF builds multiple decision trees and merges their predictions; therefore, it is more accurate and robust to outliers and noisy data. GNB is a probabilistic supervised learning model, that uses conditional probability to classify targets. 
 
-The data has outliers hence I chose my primary model as RF, famous for its robustness against outliers, RF model promises to produce more accurate results even when outliers are present. GNB on otherhand is a probabilistic model. My model question is ***what is the probability a patient will survive, given condition(comorbidities)? 
+The data has outliers hence I chose my primary model as RF, famous for its robustness against outliers, RF model promises to produce more accurate results even when outliers are present. GNB on otherhand is a probabilistic model. My model question is *** What is the probability a patient will survive, given condition(comorbidities)? 
 
 ###### Model performance and conclusion.
 ***Note:*** I kindly ask that you look into the project methodology to see the processes that led to this conclusion.
@@ -93,4 +94,48 @@ The results were obtained using:
 2. Classification report from Sklearn.metrics to evaluate Precision, Recall, F1-score and Accuracy.
 3. Cross-validation score from Sklearn.model_selection to evaluate the Accuracy dividing the data into multiple subsets to obtain a reliable metric and compare it with our previous ones.
 
-***GitHub Link:***https://github.com/Ayomide-ola/Machine-Learning/blob/main/CA1_ML.ipynb
+***GitHub Link:*** https://github.com/Ayomide-ola/Machine-Learning/blob/main/CA1_ML.ipynb
+
+### Project 3: Crossfunctional-Integrated Project(Health).
+
+*** Description:***
+
+The NHANES dataset was created to assess the health and nutritional status of adults and children in the United States. This dataset is funded by the Centers for Disease Control and Prevention (CDC), specifically through its National Center for Health Statistics (NCHS). The data is based on the survey respondents throughout the United States. Data was gathered through interviews, physical examinations, and laboratory tests. For this subset respondents 65 years old and older were labeled as “senior” and all individuals under 65 years old as “non-senior.”
+
+This project is a cross-functional project, featuring both data preprocessing and Machien learning methodology for this dataset.
+
+***Objectives:***
+1. Perform in-depth early data analysis
+2. Perform data cleaning
+3. Apply encoding, scaling, and feature engineering as required
+4. Employ both LDA (Linear Discriminant Analysis) and PCA (Principal Component Analysis) and compare the separation of classes through visualization
+5. Explain in my own words the difference between LDA and PCA in relation to my analysis result. With patterns, apply appropriate Machine learning models to datasets to make future predictions and justify choices.
+6. Train and test the ML models with different splits/ with appropriate metrics for unsupervised learning and cross-validate with K-fold cross-validation.
+7. Compare similarities and contrasts in ML modeling outcomes.
+
+#### Key Findings
+
+***Statistical Analysis:***
+***Visualization:***
+Visualization is a tool used to present patterns and findings to enhance understanding at a gaze. A box plot is a good visualization tool used during EDA. I plotted the box plots specifically to check for outliers in the variables. Outliers are observations that are numerically distant from the rest of the data as illustrated in some fig below.
+
+![image](https://github.com/Ayomide-ola/Ayomide_Portfolio-/assets/147144682/6ddf8058-1ae6-4bf8-b59f-a1ff27eeba5f) 
+
+In df, ['BMI', 'Glucose_fasting', 'Oral', 'Blood_Insulin'] variables showed significant outliers as labeled in fig. This is also consistent with the large range of these variables that was discovered in the 
+
+![image](https://github.com/Ayomide-ola/Ayomide_Portfolio-/assets/147144682/59ac497b-5713-4f5a-8552-8f0b886cdbdd)
+
+***Principal component analysis and Linear discriminate analysis comparison for classification***
+![image](https://github.com/Ayomide-ola/Ayomide_Portfolio-/assets/147144682/50b9830f-c836-4c53-a511-1ab455cd6e92)
+To the screen left, PCA attempted to classify the same target as LDA did on the right. Pca reduced the dimension of data to essentially what needed to preserve the variance, but class 1 is not distinctively separated from class 0 as is the case for LDA classification. This was because LDA focuses on separating the classes away from each-other as much as possible.
+
+***Machien Learning:***
+Part I:  I justified ML models is provided. I discovered and discussed about under and over-sampling of data, and performed Data normalization.
+Part II: GridSearchCV is applied for the selection of hyperparameters for RF classifier. Feature importance is determined using RFC model.
+Part III: Two distinct splitt's used for training and testing of ML models in the case of supervised learning. Cross-validation are applied for the authenticity of the results.
+Part IV: Confusion matrix is provided to show the classification results. Tunning of max_depth is plotted against test accuracy.
+
+***Conclusion:***
+In conclusion, result of model prediction shows min-max scaler was the best scaling technique to use for age-predict data, the model precision increased after balancing the data and at 30%, with X variable, we can get an accuracy of 71% using the parameter given and min-max scaling of data. LDA classified the target variable better than PCA overall. 
+
+***GitHub Link:*** https://github.com/Ayomide-ola/Health-analysis/blob/main/Life-style-analysis%20.ipynb

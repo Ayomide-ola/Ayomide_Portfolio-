@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 import shap
 
-st.set_page_config(layout="centered")  # centered, wide
+st.set_page_config(layout="centered")  # this configures the page to centre  
 
 @st.cache(allow_output_mutation=True)
 def load(data_path, model_path):
@@ -31,14 +31,14 @@ def predict_and_explain_price(new_case, model):
         case_to_predict[feature] = pd.Series(case_to_predict[feature], dtype="category")
     
     prediction = round(model.predict(case_to_predict)[0], 2)
-    predicted_price = 'The predicted price is **' + str(prediction) + '** $.'
+    predicted_price = 'The predicted price of your selection is **' + str(prediction) + '** $.'
         
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(case_to_predict)
     
-    direction = 'up' if prediction > explainer.expected_value else 'down'
+    direction = 'up' if prediction > explainer.expected_value else 'down' # Sets the value of the variable direction to 'up' if the value of prediction is greater than explainer.expected_value; otherwise, it sets direction to 'down'.
     
-    # Create a list with the Shap values for this case
+    # Create a list with the Shap values for specific case
     original_sv = shap_values[0].tolist()
     sv = original_sv.copy()
     if direction == 'up':
@@ -46,13 +46,12 @@ def predict_and_explain_price(new_case, model):
     else:
         sv = [i for i in sv if i<0]
         
-    # Get the absolute values of the list and reverse it. That way we see the "top" features, 
-    # no matter whether prediction is greater or smaller than the average value.
-    rev_sv = [abs(i) for i in sv].copy()
-    rev_sv.sort(reverse=True)
     
-    # Keep the top 4 shap values (contributions to the prediction) and find their positions in 
-    # the original list
+
+    rev_sv = [abs(i) for i in sv].copy() # Get the absolute values of the list and reverse it. That way we see the "top" features
+    rev_sv.sort(reverse=True) # sorts the list 'rev_sv' in place in descending order
+    
+    # Keep the top 4 shap values (contributions to the prediction) and find their positions in the original list
     max0 = rev_sv[0] if rev_sv[0] in sv else -rev_sv[0]
     max1 = rev_sv[1] if rev_sv[1] in sv else -rev_sv[1]
     max2 = rev_sv[2] if rev_sv[2] in sv else -rev_sv[2]
@@ -78,10 +77,10 @@ def predict_and_explain_price(new_case, model):
     
     explanation = 'The average price is ' + str(round(explainer.expected_value,2)) + '.' + '\n' + \
                   '\n' + 'The predicted price is driven **' + direction + '** mainly because:' + '\n' \
-                  '\n' + '  a) **' + feat0 + '** is '  + str(val0) + ' and affects the price by **' + str(round(max0,2)) + '$**' + '\n' \
-                  '\n' + '  b) **' + feat1 + '** is '  + str(val1) + ' and affects the price by **' + str(round(max1,2)) + '$**' + '\n' \
-                  '\n' + '  c) **' + feat2 + '** is '  + str(val2) + ' and affects the price by **' + str(round(max2,2)) + '$**' + '\n' \
-                  '\n' + '  d) **' + feat3 + '** is '  + str(val3) + ' and affects the price by **' + str(round(max3,2)) + '$**' + '\n' 
+                  '\n' + '  a) **' + feat0 + '** is '  + str(val0) + ' and influenced the car price by **' + str(round(max0,2)) + '$**' + '\n' \
+                  '\n' + '  b) **' + feat1 + '** is '  + str(val1) + ' and influenced the car price by **' + str(round(max1,2)) + '$**' + '\n' \
+                  '\n' + '  c) **' + feat2 + '** is '  + str(val2) + ' and influenced the car price by **' + str(round(max2,2)) + '$**' + '\n' \
+                  '\n' + '  d) **' + feat3 + '** is '  + str(val3) + ' and influenced the car price by **' + str(round(max3,2)) + '$**' + '\n' 
     
     fig = plt.figure(figsize=(10,7))
     shap.bar_plot(shap_values[0], case_to_predict, max_display=20)
@@ -91,32 +90,31 @@ def predict_and_explain_price(new_case, model):
 st.title('Car Price Prediction App')
 
 
-#### Load necessary obects
+#### Loading the saved objects
 
-image = Image.open("photo.jpeg")
+image = Image.open("car_photo.jfif")
 data  = pd.read_pickle("dataset.pickle", compression=None)
 model = pd.read_pickle("model.pickle",   compression=None)
 
-# image = Image.open("/Users/vasiliskalyvas/Documents/GitHub/streamlit/photo.jpeg")
-# data  = pd.read_pickle("/Users/vasiliskalyvas/Documents/GitHub/streamlit/dataset.pickle", compression=None)
-# model = pd.read_pickle("/Users/vasiliskalyvas/Documents/GitHub/streamlit/model.pickle", compression=None)
 
+st.image(image, use_column_width=True) # This sets the image on the dash
 
-st.image(image, use_column_width=True)
+st.write('Hi, kindly fill in the details of your choice car in the left sidebar and click on the button below!') # This is an instructional promter under the car picture
 
-st.write('Please fill in the details of the car in the left sidebar and click on the button below!')
+# Define the contents of the sidebars... 
 
+manufacturers = data['manufacturer_name'].unique().tolist() # This get the names of all the car manufacturers into a list
+models = data.groupby('manufacturer_name')['model_name'].unique().apply(list).to_dict() #This get the names of all the car models from manufacturers into a list
+transmission_type = data['transmission'].unique().tolist() # This puts car transmission into a list
+colors = data['color'].unique().tolist() # This puts car colors into a list
+fuels = data['engine_fuel'].unique().tolist() # This puts car engine fuel type into a list
+engine_types = data['engine_type'].unique().tolist() # This puts car engine type into a list
+body_types = data['body_type'].unique().tolist() # This puts car body type into a list
+states = data['state'].unique().tolist() # This puts the state of the car into list 
+drivetrains = data['drivetrain'].unique().tolist() # This puts the drivetrain into list. 
 
-manufacturers = data['manufacturer_name'].unique().tolist()
-models = data.groupby('manufacturer_name')['model_name'].unique().apply(list).to_dict()
-transmission_type = data['transmission'].unique().tolist()
-colors = data['color'].unique().tolist()
-fuels = data['engine_fuel'].unique().tolist()
-engine_types = data['engine_type'].unique().tolist()
-body_types = data['body_type'].unique().tolist()
-states = data['state'].unique().tolist()
-drivetrains = data['drivetrain'].unique().tolist()
-
+# It is important to put these datas into a list to ensure users can select from the available data in car dataset. This will show up as drop down menu when user uses the app. 
+# No we can use 'sidebar' to set the lists we defined above into our dash. Selectbox makes it easy for users to select from available car data 
 manufacturer_name = st.sidebar.selectbox("Manufacturer", manufacturers)
 model_name = st.sidebar.selectbox("Model", models[manufacturer_name])
 transmission = st.sidebar.selectbox("Type of transmission", transmission_type)
@@ -135,10 +133,10 @@ odometer_value = st.sidebar.slider("Odometer value", 0, 1000000, 1000, 100)
 new_case = [manufacturer_name, model_name, transmission, color, engine_fuel, engine_has_gas, engine_type, body_type, warranty, state, drivetrains, year_produced, odometer_value]
 
 
-#### Prediction and Boxplots
+#### Prediction and Boxplots to show the distribution 
 if (st.button('Find Car Price')):
     
-    ## A: Read the data, load the model, make the prediction and print it
+    ## Read the data, load the model, make the prediction and print it
     predicted_price, explanation, fig = predict_and_explain_price(new_case, model)
     st.subheader(predicted_price)
     
@@ -146,12 +144,12 @@ if (st.button('Find Car Price')):
 
     st.subheader('Explain the prediction')
     st.write(explanation)
-    st.write('The contribution of all parameters (including the above) is the following (red when the parameter increases the predicted price, blue otherwise):', unsafe_allow_html=True)
+    st.write('The contribution of all parameters is the following (red when the parameter contributes positively to the predicted price, blue otherwise):', unsafe_allow_html=True)
     st.pyplot(fig)
     
     st.write('----------------------------------------------------------------------------------------------------------------')
     
-    ## B: Boxplots
+    ## Boxplots for price distribution aimed at showing the range of price 
     st.write('See the price ranges per Manufacturer and Engine fuel:')
     fig = go.Figure()
     dropdown = []

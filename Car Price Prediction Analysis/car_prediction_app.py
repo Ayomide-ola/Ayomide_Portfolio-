@@ -94,7 +94,7 @@ st.title('Car Price Prediction App')
 
 image = Image.open("car_photo.jpg")
 data  = pd.read_pickle("dataset.pickle", compression=None)
-model = pd.read_pickle("model.pickle",   compression=None)
+model = pd.read_pickle("lgbm_cv.pickle",   compression=None)
 
 
 st.image(image, use_column_width=True) # This sets the image on the dash

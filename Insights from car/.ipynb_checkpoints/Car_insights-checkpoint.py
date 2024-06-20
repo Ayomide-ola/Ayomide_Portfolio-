@@ -10,9 +10,10 @@ import altair as alt
 
 st.set_page_config(layout="wide")  # centered, wide
 
-@st.cache_resource(allow_output_mutation=True)
+@st.cache_resource
 def load(data_path):
-    data = pickle.load(open(data_path, 'rb'))
+    with open(data_path, 'rb') as f:
+        data = pickle.load(f)
     return data
 
 data = load("dataset.pickle")

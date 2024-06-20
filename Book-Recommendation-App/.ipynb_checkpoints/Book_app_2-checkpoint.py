@@ -45,6 +45,7 @@ st.image(image, use_column_width=True)
 # Instruction text
 st.write('Welcome: Please fill in the details of the book in the left sidebar and click on the button below!')
 
+
 # Defining the content of the sidebar
 Book_title = Age_sorted['Title'].unique().tolist()
 Age_Category = Age_sorted['Age_group'].unique().tolist()

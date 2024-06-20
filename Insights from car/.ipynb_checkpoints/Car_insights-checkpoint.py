@@ -306,7 +306,7 @@ st.markdown("""
 # In[4]:
 
 
-jupyter nbconvert Car insights.ipynb --to script
+#jupyter nbconvert Car insights.ipynb --to script
 
 
 # In[ ]:

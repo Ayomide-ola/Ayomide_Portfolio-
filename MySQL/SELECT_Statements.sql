@@ -1,6 +1,16 @@
 SELECT * 
 FROM parks_and_recreation.employee_demographics;
 
+# ANOTHER DATABASE 'sakila' IN the same note
+SELECT *
+FROM SAKILA.ACTOR;
+
+SELECT first_name,
+last_name,
+actor_id
+from sakila.actor;
+
+
 SELECT first_name,last_name,birth_date,
 age,
 age+10
@@ -15,3 +25,8 @@ FROM parks_and_recreation.employee_demographics;
 
 SELECT DISTINCT GENDER
 FROM parks_and_recreation.employee_demographics;
+
+SELECT * FROM EMPLOYEE_SALARY;
+
+SELECT DISTINCT DEPT_ID,OCCUPATION
+FROM PARKS_AND_RECREATION.EMPLOYEE_SALARY;

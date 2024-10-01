@@ -1,5 +1,5 @@
 SELECT * 
-FROM parks_and_recreation.employee_demographics;
+FROM parks_and_recreation.employee_demographics where employee_id IN (3, 4, 10,12);
 
 # ANOTHER DATABASE 'sakila' IN the same note
 SELECT *
